@@ -1,0 +1,11 @@
+<snippet>
+     <content>
+     <![CDATA[
+<img src="http://lorempixel.com/400/200/" alt=""/>
+]]>
+     </content>
+     <tabTrigger>dummy-image-lorempixel</tabTrigger>
+     <!-- <scope>html.php.txt</scope> -->
+     <description>HTML: dummy_image_lorempixel</description>
+</snippet>
+

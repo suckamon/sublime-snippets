@@ -1,0 +1,34 @@
+<snippet>
+     <content>
+     <![CDATA[
+	// Pagetop
+    \$("#pagetop").hide();
+    \$(window).on("scroll", function() {
+        if (\$(this).scrollTop() > 500) {
+            \$('#pagetop').fadeIn(400);
+            } else {
+            \$('#pagetop').fadeOut(400);
+    	}
+
+        scrollHeight = \$(document).height(); 
+        scrollPosition = \$(window).height() + \$(window).scrollTop(); 
+        footHeight = \$("#footer").innerHeight();
+                 
+        if ( scrollHeight - scrollPosition  <= footHeight ) {
+            \$("#pagetop").css({
+                "position":"absolute",
+                "bottom": "10px"
+            });
+        } else {
+            \$("#pagetop").css({
+                "position":"fixed",
+                "bottom": "40px"
+            });
+        }
+    });
+]]>
+     </content>
+     <tabTrigger>jquery-pageTop</tabTrigger>
+     <!-- <scope>html.php.txt</scope> -->
+     <description>jQuery: jquery_pageTop</description>
+</snippet>

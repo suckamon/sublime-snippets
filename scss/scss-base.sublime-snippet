@@ -1,0 +1,242 @@
+<snippet>
+     <content>
+     <![CDATA[
+@charset "utf-8";
+/*------------------------------------------------------
+commonVar
+-------------------------------------------------------*/
+\$mainColor: #333;
+\$subColor: #333;
+\$linkColor: #333;
+\$baseFontsize: 13px;
+\$baseFont: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+\$baseMargin: 0 0 0 0;
+\$baseWidth: 1024px;
+\$baseLineHeight: 1.5em;
+
+/*------------------------------------------------------
+Mixin
+-------------------------------------------------------*/
+@mixin borderBox {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+@mixin inlineBlock {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+@mixin opacity(\$opacity) {
+    opacity: \$opacity;
+    filter: alpha(opacity=(\$opacity * 100));
+}
+
+// BreakPoint
+\$tablet: 1024px;
+\$sp: 640px;
+\$iphone: 320px;
+@mixin media(\$mediaSize){
+  //Tablet
+  @if \$mediaSize == tablet{
+    @media all and (max-width: \$tablet + px) {
+      @content
+    }
+  }
+ 
+  //SmartPhone
+  @else if \$mediaSize == sp{
+    @media all and (max-width: \$sp + px) {
+      @content
+    }
+  }
+ 
+  //iPhone
+  @else if \$mediaSize == iPhone{
+    @media all and (max-width: \$iphone + px){
+      @content
+    }
+  }
+ 
+}
+
+@mixin flexbox {
+    display:-webkit-box; // old
+    display:-moz-box; // old
+    display:-ms-flexbox; // ie
+    display:-webkit-flex; // new
+    display:flex; // new
+}
+
+@mixin gradient(\$start-color, \$end-color, \$orientation) {
+    background: \$start-color;
+    @if \$orientation == vertical {
+        // vertical
+        background: -moz-linear-gradient(top,  \$start-color 0%, \$end-color 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,\$start-color), color-stop(100%,\$end-color));
+        background: -webkit-linear-gradient(top,  \$start-color 0%,\$end-color 100%);
+        background: -o-linear-gradient(top,  \$start-color 0%,\$end-color 100%);
+        background: -ms-linear-gradient(top,  \$start-color 0%,\$end-color 100%);
+        background: linear-gradient(to bottom,  \$start-color 0%,\$end-color 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='\$start-color', endColorstr='\$end-color',GradientType=0 );
+     }
+     @else if \$orientation == horizontal {
+        // horizontal
+        background: -moz-linear-gradient(left,  \$start-color 0%, \$end-color 100%);
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,\$start-color), color-stop(100%,\$end-color));
+        background: -webkit-linear-gradient(left,  \$start-color 0%,\$end-color 100%);
+        background: -o-linear-gradient(left,  \$start-color 0%,\$end-color 100%);
+        background: -ms-linear-gradient(left,  \$start-color 0%,\$end-color 100%);
+        background: linear-gradient(to right,  \$start-color 0%,\$end-color 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='\$start-color', endColorstr='\$end-color',GradientType=1 );
+     }
+     @else {
+        // radial
+        background: -moz-radial-gradient(center, ellipse cover,  \$start-color 0%, \$end-color 100%);
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,\$start-color), color-stop(100%,\$end-color));
+        background: -webkit-radial-gradient(center, ellipse cover,  \$start-color 0%,\$end-color 100%);
+        background: -o-radial-gradient(center, ellipse cover,  \$start-color 0%,\$end-color 100%);
+        background: -ms-radial-gradient(center, ellipse cover,  \$start-color 0%,\$end-color 100%);
+        background: radial-gradient(ellipse at center,  \$start-color 0%,\$end-color 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='\$start-color', endColorstr='\$end-color',GradientType=1 );
+    }
+}
+
+@mixin transparent(\$color, \$alpha) {
+    \$rgba: rgba(\$color, \$alpha);
+    \$ie-hex-str: ie-hex-str(\$rgba);
+    background-color: transparent;
+    background-color: \$rgba;
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#{\$ie-hex-str},endColorstr=#{\$ie-hex-str});
+    zoom: 1;
+}
+
+/*------------------------------------------------------
+Import
+-------------------------------------------------------*/
+// @import "cms-entry";
+// @import "gradation";
+
+/*------------------------------------------------------
+commonStyles
+-------------------------------------------------------*/
+body {
+    min-width: \$baseWidth;
+    color: \$mainColor;
+    font-family: \$baseFont;
+    -webkit-text-size-adjust: 100%;
+    font-size: \$baseFontsize;
+    line-height: \$baseLineHeight;
+}
+a {
+    color: \$linkColor;
+    text-decoration: underline;
+    &:hover {
+        color: lighten(\$linkColor, 20%);
+        text-decoration: none;
+    }
+}
+.alpha {
+    transition: opacity 0.3s ease;
+    &:hover {
+        @include opacity(0.75);
+    }
+}
+.wrapper {
+    width: \$baseWidth;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+.mr0 {
+    margin-right: 0 !important;
+}
+*, ::after, ::before {
+  @include borderBox;
+}
+
+/*------------------------------------------------------
+formParts
+-------------------------------------------------------*/
+\$formBaseHeight: 32px;
+@mixin formBase {
+    @include borderBox;
+    padding: 0 4px;
+    font-size: \$baseFontsize;
+    font-family: \$baseFont;
+    border: #ddd solid 1px;
+    border-radius: 3px;
+}
+
+form {
+    input[type="text"],
+    input[type="email"],
+    input[type="url"] {
+        @include formBase;
+        height: \$formBaseHeight
+    }
+    input[type="password"] {
+        @include formBase;
+        height: \$formBaseHeight
+    }
+    input[type="radio"] {
+        &:hover {
+            cursor: pointer;
+        }
+        &+label {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+    input[type="submit"] {
+        height: \$formBaseHeight;
+        padding: 0 18px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    select {
+        @include formBase;
+        height: \$formBaseHeight;
+    }
+    textarea {
+        @include formBase;
+    }
+    button {
+        border: none !important;
+        background: none !important;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+/*------------------------------------------------------
+clearFix
+-------------------------------------------------------*/
+.cf:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.cf {
+    zoom: 1;
+}
+
+/*------------------------------------------------------
+Styles
+-------------------------------------------------------*/
+${1}
+]]>
+     </content>
+     <tabTrigger>scss-base</tabTrigger>
+     <!-- <scope>html.php.txt</scope> -->
+     <description>SCSS: scss_baseCode</description>
+</snippet>
+
+
+

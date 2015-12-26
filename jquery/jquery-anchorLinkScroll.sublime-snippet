@@ -1,0 +1,32 @@
+<snippet>
+     <content>
+     <![CDATA[
+    // AnchorLink Scroll
+    var \$anchors = \$(" a[href^='#']");
+    var \$doc     = \$('body, html');
+    var speed    = 900;
+         
+    \$anchors.each(function(){
+      var \$anchor   = \$(this);
+      var anchorID  = \$anchor.attr("href");
+      var \$target   = \$(anchorID);
+           
+      \$anchor.click(function(e){
+        var targetPositionTop = \$target.offset().top;
+         
+        \$doc.stop().animate({
+          scrollTop: targetPositionTop
+        },
+        {
+          duration : speed
+        });     
+        return false;
+      });
+    });
+]]>
+     </content>
+     <tabTrigger>jquery-anchorLinkScroll</tabTrigger>
+     <!-- <scope>html.php.txt</scope> -->
+     <description>jQuery: jquery_anchorLinkScroll</description>
+</snippet>
+

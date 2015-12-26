@@ -1,0 +1,11 @@
+<snippet>
+     <content>
+     <![CDATA[
+<img src="http://placehold.jp/150x150.png" alt=""/>
+]]>
+     </content>
+     <tabTrigger>dummy-image-placehold</tabTrigger>
+     <!-- <scope>html.php.txt</scope> -->
+     <description>HTML: dummy_image_placehold</description>
+</snippet>
+
